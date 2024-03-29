@@ -33,15 +33,21 @@ public class Empresa
 	public void generarRecibos()
 	// Hacerlo todo en el mismo hash, utilizando containkey.
 	{
-		for( Empleado empleado: listaDeEmpleados )
-		{
-			List<Recibo> listaRecibos = recibos.get(empleado);
-			
-			recibos.get(empleado).add(empleado.generarRecibo());
-			// recibos.put( empleado, empleado.generarRecibo() );
-			recibos.
-		}
+        for (Map.Entry<Empleado, List<Recibo>> entry : recibos.entrySet())
+        {
+            // Obtener la lista de recibos para la clave actual
+            List<Recibo> recibosActualizado = entry.getValue();
+
+            // Agregar un nuevo recibo a la lista de recibos
+            Recibo nuevoRecibo = entry.getKey().generarRecibo();
+            recibosActualizado.add(nuevoRecibo);
+
+            // Actualizar la lista de recibos en el HashMap
+            recibos.put(entry.getKey(), recibosActualizado);
+        }
 	}
+	
+
 	
 	public int getTotalSueldosNeto()
 	{
