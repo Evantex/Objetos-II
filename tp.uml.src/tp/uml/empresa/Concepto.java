@@ -18,7 +18,7 @@ public class Concepto
 	}
 	
 	
-	Concepto(String nombre, int monto)
+	public Concepto(String nombre, int monto)
 	{
 		this.nombre = nombre;
 		this.monto = monto;

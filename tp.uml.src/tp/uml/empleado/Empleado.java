@@ -1,9 +1,8 @@
 package tp.uml.empleado;
+import tp.uml.empresa.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import tp.uml.empresa.Recibo;
-import tp.uml.empresa.Concepto;
 import java.util.Collection;
 import java.time.Period;
 
@@ -88,3 +87,4 @@ public abstract class Empleado
 	
 	
 }
+
