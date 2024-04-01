@@ -12,7 +12,7 @@ public abstract class Empleado
 	protected String direccion;
 	protected String estadoCivil;
 	protected LocalDate fechaNacimiento;
-	protected int sueldoBasico;
+	protected double sueldoBasico;
 	// protected List<Recibo> recibosDeHaberes = new ArrayList<>();
 	
 
@@ -33,9 +33,14 @@ public abstract class Empleado
 		return this.recibosDeHaberes.get(nroRecibo);
 	}
 	*/
+	
+	public boolean tieneConyugue()
+	{
+		return !estadoCivil.equals("Soltero");
+	}
 
 	
-	public String nombre()
+	public String getNombre()
 	{
 		return nombre;
 	}
@@ -47,7 +52,7 @@ public abstract class Empleado
 	}
 	
 	
-	public LocalDate fechaNacimiento()
+	public LocalDate getFechaNacimiento()
 	{
 		return fechaNacimiento;
 	}
@@ -61,29 +66,34 @@ public abstract class Empleado
 	}
 	
 	
-	public int retenciones()
+	public double getRetenciones()
 	{
-		return this.obraSocial() + this.aportesJubilatorios();
+		return this.getAporteObraSocial() + this.getAportesJubilatorios();
 	}
 	
 	
-	public abstract int sueldoBruto();
-	protected abstract int obraSocial();
-	protected abstract int aportesJubilatorios();
-	protected abstract List<Concepto> getConceptos();
+	public abstract double getSueldoBruto();
+	
+	protected abstract double getAporteObraSocial();
+	
+	protected abstract double getAportesJubilatorios();
+	
+	protected abstract List<Concepto> getConceptos(); // Por cada tipo de empleado hay una lista de conceptos distinta que conforman al recibo.
 	
 	
-	public int sueldoNeto()
+	public double getSueldoNeto()
 	{
-		return this.sueldoBruto() - this.retenciones();
+		return this.getSueldoBruto() - this.getRetenciones();
 	}
 	
 	
 	public Recibo  generarRecibo()
 	{
-		return new Recibo( this.nombre, this.direccion, LocalDate.now(), this.sueldoBruto(), this.sueldoNeto(), this.getConceptos() );
+		return new Recibo( this.nombre, this.direccion, LocalDate.now(), this.getSueldoBruto(), this.getSueldoNeto(), this.getConceptos() );
 	}
 	
+//	 public Recibo(String nombreEmpleado, String direccionEmpleado, LocalDate fechaEmision,	double sueldoBruto,
+//				int sueldoNeto, List<Concepto> conceptos)
 	
 	
 }

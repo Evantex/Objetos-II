@@ -12,24 +12,27 @@ public class PlantaPermanente extends Empleado
 	private boolean conyugue;
 	
 	@Override
-	public int sueldoBruto()
+	public double getSueldoBruto()
 	{
-		return this.sueldoBasico + this.salarioFamiliar();
+		return this.sueldoBasico + this.getSalarioFamiliar();
 	}
 	
-	private int asignacionPorHijo()
+	
+	private double getAsignacionPorHijo()
 	{
 		return 150 * this.cantidadDeHijos;
 	}
 	
-	public int salarioFamiliar()
+	
+	public double getSalarioFamiliar()
 	{
-		return this.asignacionPorHijo() + this.asignacionPorConyugue() + this.añosAntiguedad * 50;
+		return this.getAsignacionPorHijo() + this.getAsignacionPorConyugue() + this.añosAntiguedad * 50;
 	}
 	
-	private int asignacionPorConyugue()
+	
+	private double getAsignacionPorConyugue()
 	{
-		if( this.conyugue )
+		if ( this.conyugue )
 		{
 			return 100;
 		}
@@ -39,21 +42,24 @@ public class PlantaPermanente extends Empleado
 		}
 	}
 	
+	
 	@Override
-	protected int obraSocial()
+	protected double getAporteObraSocial()
 	{
-		return (this.sueldoBruto() * 10) / 100 + this.cantidadDeHijos * 20;
+		return (this.getSueldoBruto() * 10) / 100 + this.cantidadDeHijos * 20;
 	}
 
+	
 	@Override
-	protected int aportesJubilatorios()
+	protected double getAportesJubilatorios()
 	{
-		return (this.sueldoBruto() * 15) / 100;
+		return (this.getSueldoBruto() * 15) / 100;
 	}
+	
 	
 	// Constructor
 	public PlantaPermanente(String nombre, String direccion, String estadoCivil,
-			LocalDate fechaNacimiento, int sueldoBasico, boolean conyugue, int cantidadDeHijos,
+			LocalDate fechaNacimiento, double sueldoBasico, int cantidadDeHijos,
 				int añosAntiguedad)
 	{
 		this.nombre = nombre;
@@ -61,19 +67,19 @@ public class PlantaPermanente extends Empleado
 		this.estadoCivil = estadoCivil;
 		this.fechaNacimiento = fechaNacimiento;
 		this.sueldoBasico = sueldoBasico;
-		this.conyugue = conyugue;
 		this.cantidadDeHijos = cantidadDeHijos;
 		this.añosAntiguedad = añosAntiguedad;
 	}
+	
 	
 		@Override
 		public List<Concepto> getConceptos()
 		{
 			List<Concepto> conceptos = new ArrayList<>();
 			conceptos.add( new Concepto("monto por sueldo basico", this.sueldoBasico));
-			conceptos.add( new Concepto("monto por salario familiar", this.salarioFamiliar()));
-			conceptos.add( new Concepto("descuento por obra social", this.obraSocial()));
-			conceptos.add( new Concepto("descuento por aportes jubilatorios", this.aportesJubilatorios()));	
+			conceptos.add( new Concepto("monto por salario familiar", this.getSalarioFamiliar()) );
+			conceptos.add( new Concepto("descuento por obra social", this.getAporteObraSocial()) );
+			conceptos.add( new Concepto("descuento por aportes jubilatorios", this.getAportesJubilatorios()) );	
 			return conceptos;
 		}
 }

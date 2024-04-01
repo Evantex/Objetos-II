@@ -4,40 +4,45 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmpleadoPlantaTemporaria extends Empleado
+public class PlantaTransitoria extends Empleado
 {
 	private LocalDate fechaFinDegnacionPlantaTemp;
 	private int cantidadHorasExtra;
+	
 	
 	protected LocalDate fechaFinDegnacionPlantaTemp()
 	{
 		return fechaFinDegnacionPlantaTemp;
 	}
 
-	public int sueldoBruto()
+	
+	public double getSueldoBruto()
 	{
-		return this.sueldoBasico + this.montoPorHorasExtra();
+		return this.sueldoBasico + this.getMontoPorHorasExtra();
 	}
 	
-	private int montoPorHorasExtra()
+	
+	private double getMontoPorHorasExtra()
 	{
 		return this.cantidadHorasExtra * 40;
 	}
 	
+	
 	@Override
-	protected int obraSocial()
+	protected double getAporteObraSocial()
 	{
-		return (this.sueldoBruto() * 10) / 100 + this.retorna_SiSuperaEdad_(25, 50);
+		return (this.getSueldoBruto() * 10) / 100 + this.retorna_SiSuperaEdad_(25, 50);
 	}
 	
 
 	@Override
-	protected int aportesJubilatorios()
+	protected double getAportesJubilatorios()
 	{
-		return (this.sueldoBruto() * 10) / 100 + this.cantidadHorasExtra * 5;
+		return (this.getSueldoBruto() * 10) / 100 + this.cantidadHorasExtra * 5;
 	}
 	
-	protected int retorna_SiSuperaEdad_(int retorno, int edad)
+	
+	protected double retorna_SiSuperaEdad_(double retorno, int edad)
 	{
 		if( this.edad() >= edad )
 		{
@@ -49,9 +54,10 @@ public class EmpleadoPlantaTemporaria extends Empleado
 		}
 	}
 	
+	
 	// Constructor
-	public EmpleadoPlantaTemporaria(String nombre, String direccion, String estadoCivil,
-			LocalDate fechaNacimiento, int sueldoBasico, int cantidadHorasExtra)
+	public PlantaTransitoria(String nombre, String direccion, String estadoCivil,
+			LocalDate fechaNacimiento, double sueldoBasico, int cantidadHorasExtra)
 	{
 		this.nombre = nombre;
 		this.direccion = direccion;
@@ -61,14 +67,15 @@ public class EmpleadoPlantaTemporaria extends Empleado
 		this.cantidadHorasExtra = cantidadHorasExtra;
 	}
 	
+	
 	@Override
 	public List<Concepto> getConceptos()
 	{
 		List<Concepto> conceptos = new ArrayList<>();
-		conceptos.add( new Concepto("monto por sueldo basico", this.sueldoBasico));
-		conceptos.add( new Concepto("monto por horas extra", this.montoPorHorasExtra()));
-		conceptos.add( new Concepto("descuento por obra social", this.obraSocial()));
-		conceptos.add( new Concepto("descuento por aportes jubilatorios", this.aportesJubilatorios()));	
+		conceptos.add( new Concepto("monto por sueldo basico", this.sueldoBasico) );
+		conceptos.add( new Concepto("monto por horas extra", this.getMontoPorHorasExtra()) );
+		conceptos.add( new Concepto("descuento por obra social", this.getAporteObraSocial()) );
+		conceptos.add( new Concepto("descuento por aportes jubilatorios", this.getAportesJubilatorios()) );	
 		return conceptos;
 	}
 }

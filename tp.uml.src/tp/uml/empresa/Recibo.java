@@ -1,5 +1,4 @@
 package tp.uml.empresa;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,38 +9,43 @@ public class Recibo
 	private String nombreEmpleado;
 	private String direccionEmpleado;
 	private LocalDate fechaEmision;
-	private int sueldoBruto;
-	private int sueldoNeto;
+	private double sueldoBruto;
+	private double sueldoNeto;
 	private List<Concepto> conceptos = new ArrayList<>();
 	
-	public String nombreEmpleado()
+	
+	public String getNombreEmpleado()
 	{
 		return this.nombreEmpleado;
 	}
 	
-	public String direccionEmpleado()
+	
+	public String getDireccionEmpleado()
 	{
 		return this.direccionEmpleado;
 	}
 	
-	public LocalDate fechaEmision()
+	
+	public LocalDate getFechaEmision()
 	{
 		return this.fechaEmision;
 	}
 	
-	public int sueldoBruto()
+	
+	public double getSueldoBruto()
 	{
 		return this.sueldoBruto;
 	}
 	
-	public int sueldoNeto()
+	
+	public double getSueldoNeto()
 	{
 		return this.sueldoNeto;
 	}
 	
 	
-	 public Recibo(String nombreEmpleado, String direccionEmpleado, LocalDate fechaEmision,	int sueldoBruto,
-				int sueldoNeto, List<Concepto> conceptos)
+	 public Recibo(String nombreEmpleado, String direccionEmpleado, LocalDate fechaEmision,	double sueldoBruto,
+				double sueldoNeto, List<Concepto> conceptos)
 	{
 		this.nombreEmpleado = nombreEmpleado;
 		this.direccionEmpleado = direccionEmpleado;
@@ -50,6 +54,8 @@ public class Recibo
 		this.sueldoNeto = sueldoNeto;
 		this.conceptos = conceptos;
 	}	
+	 
+	 
 	/*
 	public String desgloseConceptos()
 	{
@@ -61,13 +67,14 @@ public class Recibo
 	}
 	*/
 	 
+	 
 	 public void getConceptos()
 	 {
 		 System.out.printf("%s %60s %n", "Concepto", "Monto");
 		 for( int indice = 0; indice < this.conceptos.size(); indice++ )
 		 {
-			 final String nombre = this.conceptos.get(indice).nombre();
-			 final int monto = this.conceptos.get(indice).monto();
+			 String nombre = this.conceptos.get(indice).nombre();
+			 double monto = this.conceptos.get(indice).monto();
 			 System.out.printf("%s %27d$ %n", nombre, monto);
 		 }
 	 }

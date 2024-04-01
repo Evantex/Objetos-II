@@ -14,7 +14,7 @@ public class Empresa
 	private String nombre;
 	private int cuit;
 	private Collection<Empleado> listaDeEmpleados = new ArrayList<Empleado>();
-	private Map<Empleado, List<Recibo>> recibos = new HashMap<>();
+	private Map<Empleado, List<Recibo>> mapEmpleadoRecibos = new HashMap<>();
 	// Prueba
 	
 	public Collection<Empleado> getListaDeEmpleados()
@@ -33,7 +33,7 @@ public class Empresa
 	public void generarRecibos()
 	// Hacerlo todo en el mismo hash, utilizando containkey.
 	{
-        for (Map.Entry<Empleado, List<Recibo>> entry : recibos.entrySet())
+        for (Map.Entry<Empleado, List<Recibo>> entry : mapEmpleadoRecibos.entrySet())
         {
             // Obtener la lista de recibos para la clave actual
             List<Recibo> recibosActualizado = entry.getValue();
@@ -43,41 +43,44 @@ public class Empresa
             recibosActualizado.add(nuevoRecibo);
 
             // Actualizar la lista de recibos en el HashMap
-            recibos.put(entry.getKey(), recibosActualizado);
+            mapEmpleadoRecibos.put(entry.getKey(), recibosActualizado);
         }
 	}
 	
 
-	
-	public int getTotalSueldosNeto()
+	public double getTotalSueldosNeto()
 	{
-		int monto = 0;
-		for( Empleado empleado: listaDeEmpleados )
-		{
-			monto += empleado.sueldoNeto();
-		}
-		return monto;
+		double totalSueldosNeto = 0;
+        for (Map.Entry<Empleado, List<Recibo>> entry : mapEmpleadoRecibos.entrySet())
+        {
+        	totalSueldosNeto += entry.getKey().getSueldoNeto();
+        }
+        return totalSueldosNeto;
 	}
 	
-	public int getTotalSueldosBruto()
+	
+	public double getTotalSueldosBruto()
 	{
-		int monto = 0;
-		for( Empleado empleado: listaDeEmpleados )
-		{
-			monto += empleado.sueldoBruto();
-		}
-		return monto;
+		double[] totalSueldosBruto = {0};
+		/** Usamos un array ya que las variables capturadas por la expresión lambda deben ser efectivamente finales 
+				o estar "efectivamente finales", (es decir, no pueden ser modificadas después de la captura). 
+		 @return Devuelve el monto total del sueldo bruto que deberá desembolar la empresa para pagarle a todos sus empleados.
+		 */
+		this.mapEmpleadoRecibos.forEach( (empleado, recibos) -> totalSueldosBruto[0] += empleado.getSueldoBruto() );
+		return totalSueldosBruto[0];
 	}
+	
 	
 	public int getTotalRetenciones()
 	{
 		int monto = 0;
 		for( Empleado empleado: listaDeEmpleados )
 		{
-			monto += empleado.retenciones();
+			monto += empleado.getRetenciones();
 		}
 		return monto;
 	}
+	
 	
 	public Empresa(String nombre, int cuit)
 	{

@@ -4,7 +4,7 @@ public class Concepto
 {
 	
 	private String nombre;
-	private int monto;
+	private double monto;
 	
 	public String nombre()
 	{
@@ -12,13 +12,13 @@ public class Concepto
 	}
 	
 	
-	public int monto()
+	public double monto()
 	{
 		return this.monto;
 	}
 	
 	
-	public Concepto(String nombre, int monto)
+	public Concepto(String nombre, double monto)
 	{
 		this.nombre = nombre;
 		this.monto = monto;
