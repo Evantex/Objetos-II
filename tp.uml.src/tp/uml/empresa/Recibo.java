@@ -43,6 +43,11 @@ public class Recibo
 		return this.sueldoNeto;
 	}
 	
+	public List<Concepto> getConceptos()
+	{
+		return this.conceptos;
+	}
+	
 	
 	 public Recibo(String nombreEmpleado, String direccionEmpleado, LocalDate fechaEmision,	double sueldoBruto,
 				double sueldoNeto, List<Concepto> conceptos)
@@ -67,15 +72,28 @@ public class Recibo
 	}
 	*/
 	 
-	 
-	 public void getConceptos()
+	 public int stringMasGrande(List<String> listaString)
 	 {
-		 System.out.printf("%s %60s %n", "Concepto", "Monto");
+		 int stringMayor = 0;
+		 for( int indice = 0; indice < listaString.size(); indice++ )
+		 {
+			 if( stringMayor < listaString.get(indice).length() )
+			 {
+				 stringMayor = listaString.get(indice).length();
+			 }
+		 }
+		 return stringMayor;
+	 }
+	 
+	 
+	 public void imprimirConceptos()
+	 {
+		 List<String> nombreConceptos = this.conceptos.stream().map( n -> n.nombre() ).toList();
+		 int distanciaColumna = this.stringMasGrande(nombreConceptos) + 1;
+		 System.out.printf("%-" + (distanciaColumna + 5) + "s %-" + (distanciaColumna) + "s%n", "Concepto", "Monto");
 		 for( int indice = 0; indice < this.conceptos.size(); indice++ )
 		 {
-			 String nombre = this.conceptos.get(indice).nombre();
-			 double monto = this.conceptos.get(indice).monto();
-			 System.out.printf("%s %27d$ %n", nombre, monto);
+			 System.out.printf("%-" + (distanciaColumna + 5) + "s %-" + (distanciaColumna) + ".2f%n", conceptos.get(indice).nombre(), conceptos.get(indice).monto());
 		 }
 	 }
 }

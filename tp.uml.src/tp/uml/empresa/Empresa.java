@@ -7,31 +7,51 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 
 public class Empresa 
 {
 	private String nombre;
-	private int cuit;
+	private String cuit;
 	private Collection<Empleado> listaDeEmpleados = new ArrayList<Empleado>();
 	private Map<Empleado, List<Recibo>> mapEmpleadoRecibos = new HashMap<>();
 	// Prueba
 	
-	public Collection<Empleado> getListaDeEmpleados()
+	
+	
+	public Set<Empleado> getListaDeEmpleados()
 	{
-		return this.listaDeEmpleados;
+		return this.mapEmpleadoRecibos.keySet();
+	}
+	
+	
+	public List<Recibo> getReciboEmpleado_( Empleado empleado )
+	{
+		return this.mapEmpleadoRecibos.get(empleado);
 	}
 	
 	
 	public void agregarEmpleado(Empleado empleado)
 	{
-		this.listaDeEmpleados.add(empleado);
+		if (this.mapEmpleadoRecibos.containsKey(empleado))
+		{
+			throw new RuntimeException( "El empleado especificado ya se encuentra en la lista" );
+		}
+		else
+		{
+			this.mapEmpleadoRecibos.put(empleado, new ArrayList<Recibo>());
+		}
 	}
 
 	
+	public void quitarEmpleado(Empleado empleado)
+	{
+		this.mapEmpleadoRecibos.remove(empleado);
+	}
 	
+
 	public void generarRecibos()
-	// Hacerlo todo en el mismo hash, utilizando containkey.
 	{
         for (Map.Entry<Empleado, List<Recibo>> entry : mapEmpleadoRecibos.entrySet())
         {
@@ -82,7 +102,7 @@ public class Empresa
 	}
 	
 	
-	public Empresa(String nombre, int cuit)
+	public Empresa(String nombre, String cuit)
 	{
 		this.nombre = nombre;
 		this.cuit = cuit;

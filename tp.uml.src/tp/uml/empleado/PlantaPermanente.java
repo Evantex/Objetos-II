@@ -76,10 +76,12 @@ public class PlantaPermanente extends Empleado
 		public List<Concepto> getConceptos()
 		{
 			List<Concepto> conceptos = new ArrayList<>();
-			conceptos.add( new Concepto("monto por sueldo basico", this.sueldoBasico));
-			conceptos.add( new Concepto("monto por salario familiar", this.getSalarioFamiliar()) );
-			conceptos.add( new Concepto("descuento por obra social", this.getAporteObraSocial()) );
-			conceptos.add( new Concepto("descuento por aportes jubilatorios", this.getAportesJubilatorios()) );	
+			conceptos.add( new Concepto("Monto bruto:", this.getSueldoBruto()));
+			conceptos.add( new Concepto("Monto por sueldo basico", this.sueldoBasico));
+			conceptos.add( new Concepto("Monto por salario familiar", this.getSalarioFamiliar()) );
+			conceptos.add( new Concepto("Descuento por obra social", this.getAporteObraSocial()) );
+			conceptos.add( new Concepto("Descuento por aportes jubilatorios", this.getAportesJubilatorios()) );
+			conceptos.add( new Concepto("Monto neto:", this.getSueldoNeto()));
 			return conceptos;
 		}
 }
